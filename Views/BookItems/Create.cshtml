@@ -1,19 +1,39 @@
+@model SODV3201_LibMgtSys.Models.BookItem
+
 @{
-    ViewData["Title"] = "BookItemsCreate";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Create";
 }
 
-<!DOCTYPE html>
+<h1>Create</h1>
 
-<html>
+<h4>Book</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ISBN" class="control-label"></label>
+                <input asp-for="ISBN" class="form-control" />
+                <span asp-validation-for="ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-
-<body>
-    Welcome from <b>Create View</b> of <b>BookItemsController</b>
-</body>
-
-</html>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

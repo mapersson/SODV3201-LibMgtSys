@@ -20,13 +20,13 @@ namespace SODV3201_LibMgtSys.Data
             {
                 new BookItem { ISBN = "978771601184",
                 Author = "Chic Scott",
-                Title = "Ski Trials in the Canadian Rockies",
+                Title = "Ski Trails in the Canadian Rockies",
                 Borrowed = DateTime.Parse("2020-09-01"),
                 Due =  DateTime.Parse("2020-09-15")
                 },
                 new BookItem { ISBN = "978771601185",
                 Author = "Chic Scott",
-                Title = "Ski Trials in the Canadian Rockies",
+                Title = "Ski Trails in the Canadian Rockies",
                 Borrowed = DateTime.Parse("2020-09-01"),
                 Due =  DateTime.Parse("2020-09-15")
                 }
