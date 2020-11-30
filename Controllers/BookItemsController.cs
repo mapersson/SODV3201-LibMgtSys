@@ -26,6 +26,29 @@ namespace SODV3201_LibMgtSys.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(BookItem bookItem)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (bookItem != null)
+                    {
+                        bookItem.Borrowed = null;
+                        bookItem.Due = null;
+                        _context.BookItems.Add(bookItem);
+                        await _context.SaveChangesAsync();
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+            return View(bookItem);
+        }
 
         [HttpGet]
         public IActionResult Edit()

@@ -8,7 +8,7 @@ namespace SODV3201_LibMgtSys.Models
         public string ISBN { get; set; }
         public string Author { get; set; }
         public string Title { get; set; }
-        public DateTime Borrowed { get; set; }
-        public DateTime Due { get; set; }
+        public DateTime? Borrowed { get; set; }
+        public DateTime? Due { get; set; }
     }
 }
