@@ -51,7 +51,7 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -61,7 +61,7 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpPost, ActionName("Edit")]
-        public async Task<IActionResult> EditPost(int? id)
+        public async Task<IActionResult> EditPost(Guid? id)
         {
             if (id == null)
             {
@@ -88,7 +88,7 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
