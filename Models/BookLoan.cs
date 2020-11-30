@@ -5,7 +5,7 @@ namespace SODV3201_LibMgtSys.Models
     public class BookLoan
     {
         public Guid ID { get; set; }
-        public Guid LibAcccountID { get; set; }
+        public Guid LibAccountID { get; set; }
         public Guid BookItemID { get; set; }
         public DateTime BorrowedDate { get; set; }
         public DateTime DueDate { get; set; }
