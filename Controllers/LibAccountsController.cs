@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SODV3201_LibMgtSys.Data;
 using SODV3201_LibMgtSys.Models;
+using SODV3201_LibMgtSys.Models.ViewModels;
 
 namespace SODV3201_LibMgtSys.Controllers
 {
@@ -21,32 +22,59 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(viewData);
         }
 
-        public async Task<IActionResult> CreateBookLoan()
+        [HttpGet]
+        public async Task<IActionResult> CreateBookLoan(Guid? id)
         {
 
-            var myAccount = await _context.LibAccounts.SingleAsync(l => l.Owner.LastName == "Persson");
-            var myBook = await _context.BookItems.SingleAsync(b => b.ISBN == "978771601184");
-            var myBookLoan = new BookLoan
-            {
-                LibAccountID = myAccount.ID,
-                BookItemID = myBook.ID,
-                BorrowedDate = DateTime.Now,
-                DueDate = DateTime.Parse("2020-09-01")
-            };
+            var testBook = await _context.BookItems.SingleAsync(b => b.ISBN == "978771601184");
+            var testID = testBook.ID;
+            id = testID;
 
-            try
+            if (id != null)
             {
-                _context.BookLoans.Add(myBookLoan);
-                await _context.SaveChangesAsync();
+                var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
+                var newBookItem = await _context.BookItems.SingleOrDefaultAsync(b => b.ID == id);
 
-                return RedirectToAction(nameof(Index));
+                var newLoan = new BookLoan
+                {
+                    BookItemID = newBookItem.ID,
+                    BookItem = newBookItem
+                };
+
+                var bookLoanData = new BookLoanData
+                {
+                    loan = newLoan,
+                    libAccounts = libAccounts
+                };
+
+                return View(bookLoanData);
             }
-            catch (DbUpdateException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-            }
 
-            return View();
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateBookLoan(BookLoanData data)
+        {
+            if (data != null)
+            {
+                var bookLoan = data.loan;
+                var libAccount = await _context.LibAccounts.SingleAsync(l => l.ID == bookLoan.LibAccountID);
+                // TODO: Change this code to properly increment the number of books checked out. 
+                libAccount.ItemsCheckedOut = 10;
+                try
+                {
+                    _context.BookLoans.Add(bookLoan);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+            }
+            return View(data);
         }
     }
 }
