@@ -51,9 +51,40 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            return View(await _context.BookItems.FirstOrDefaultAsync(m => m.ID == id));
+        }
+
+        [HttpPost, ActionName("Edit")]
+        public async Task<IActionResult> EditPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var bookItemToUpdate = await _context.BookItems.FirstOrDefaultAsync(b => b.ID == id);
+            if (await TryUpdateModelAsync<BookItem>(bookItemToUpdate,
+            "",
+            b => b.Title, b => b.Author))
+            {
+                try
+                {
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(bookItemToUpdate);
         }
 
         [HttpGet]
