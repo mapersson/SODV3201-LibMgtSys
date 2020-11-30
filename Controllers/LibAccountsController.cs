@@ -22,6 +22,17 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(viewData);
         }
 
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id != null)
+            {
+                var libAccount = await _context.LibAccounts.Include(o => o.Owner).Include(b => b.BookLoans).ThenInclude(c => c.BookItem).SingleAsync(l => l.ID == id);
+
+                return View(libAccount);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         [HttpGet]
         public async Task<IActionResult> CreateBookLoan(Guid? id)
         {
@@ -38,13 +49,13 @@ namespace SODV3201_LibMgtSys.Controllers
                 var newLoan = new BookLoan
                 {
                     BookItemID = newBookItem.ID,
-                    BookItem = newBookItem
                 };
 
                 var bookLoanData = new BookLoanData
                 {
                     loan = newLoan,
-                    libAccounts = libAccounts
+                    libAccounts = libAccounts,
+                    bookItem = newBookItem
                 };
 
                 return View(bookLoanData);
