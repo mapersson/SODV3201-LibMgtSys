@@ -75,14 +75,14 @@ namespace SODV3201_LibMgtSys.Data
             var bookLoans = new BookLoan[] {
                 new BookLoan
                 {
-                    LibAcccountID = libAcccounts.Single(l => l.Owner.LastName == "Persson").ID,
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Persson").ID,
                     BookItemID = bookItems.Single( b => b.ISBN == "978771601184").ID,
                     BorrowedDate = DateTime.Now,
                     DueDate = DateTime.Parse("2020-09-01")
                 },
                 new BookLoan
                 {
-                    LibAcccountID = libAcccounts.Single(l => l.Owner.LastName == "Chamberlain").ID,
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Chamberlain").ID,
                     BookItemID = bookItems.Single( b => b.ISBN == "978771601185").ID,
                     BorrowedDate = DateTime.Now,
                     DueDate = DateTime.Parse("2020-09-01")

@@ -1,0 +1,47 @@
+@model IEnumerable<SODV3201_LibMgtSys.Models.LibAccount>
+@{
+    ViewData["Title"] = "LibAccountsIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Not Working</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemsCheckedOut)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemsCheckedOut)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Not Working</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Not Working</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

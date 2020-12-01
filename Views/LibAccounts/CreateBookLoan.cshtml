@@ -1,0 +1,50 @@
+@model SODV3201_LibMgtSys.Models.ViewModels.BookLoanData
+
+@{
+    ViewBag.Tile = "Book Loan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Message</h2>
+
+@using (Html.BeginForm("CreateBookLoan","LibAccounts"))
+{
+    @Html.ValidationSummary(false,"", new {@class = "text-danger"})
+    
+    <div class= "form-group"> 
+        @Html.LabelFor(m=>m.bookItem.Title)
+        @Html.TextBoxFor(m=>m.bookItem.Title, new {@class = "form-control"})
+        @* @Html.ValidationMessageFor(m => m.loan.BookItem.Title) *@
+    </div>
+     
+    <div class = "form-group">
+        @Html.LabelFor(m => m.loan.BorrowedDate)
+        @Html.TextBoxFor(m => m.loan.BorrowedDate,"{0:d MMM yyyy}", new {@class = "form-control"})
+        @* @Html.ValidationMessageFor(m => m.loan.BorrowedDate) *@
+    </div>
+    <div class = "form-group">
+        @Html.LabelFor(m => m.loan.DueDate)
+        @Html.TextBoxFor(m => m.loan.DueDate,"{0:d MMM yyyy}", new {@class = "form-control"})
+        @* @Html.ValidationMessageFor(m => m.loan.DueDate) *@
+    </div>
+@*
+    <div class="checkbox">
+        <label for="">
+            @Html.CheckBoxFor(m=>m.Customer.IsSubscribed) Subscribe for News and Updates
+        </label>
+
+    </div>
+*@
+    <div class = "form-group">
+        @Html.LabelFor(m => m.loan.LibAccount)
+        @Html.DropDownListFor( m => m.loan.LibAccountID, new SelectList(Model.libAccounts,"ID","Owner.FirstName"),"Select a Library Account: ", new { @class = "form-control"})
+        @* @Html.ValidationMessageFor(m => m.loan.LibAccountID) *@
+    </div>
+
+    @Html.HiddenFor(m => m.loan.BookItemID)
+    
+    <div class = "form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+    
+}
