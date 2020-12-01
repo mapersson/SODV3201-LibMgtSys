@@ -40,6 +40,11 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.DueDate)
                         </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Not Working</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-action="CloseBookLoan" asp-route-id="@item.ID">Close Book Loan</a>
+                        </td>
                     </tr>
                 }
             </table>

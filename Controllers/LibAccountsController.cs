@@ -71,7 +71,7 @@ namespace SODV3201_LibMgtSys.Controllers
                 var bookLoan = data.loan;
                 var libAccount = await _context.LibAccounts.SingleAsync(l => l.ID == bookLoan.LibAccountID);
                 // TODO: Change this code to properly increment the number of books checked out. 
-                libAccount.ItemsCheckedOut = 10;
+                libAccount.ItemsCheckedOut = libAccount.ItemsCheckedOut + 1;
                 try
                 {
                     _context.BookLoans.Add(bookLoan);
@@ -86,6 +86,53 @@ namespace SODV3201_LibMgtSys.Controllers
 
             }
             return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CloseBookLoan(Guid? id)
+        {
+            if (id != null)
+            {
+                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(b => b.ID == id);
+                bookLoan.ReturnedDate = DateTime.Now;
+
+                var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
+                var newBookItem = await _context.BookItems.SingleOrDefaultAsync(b => b.ID == bookLoan.BookItemID);
+
+                var bookLoanData = new BookLoanData
+                {
+                    loan = bookLoan,
+                    bookItem = newBookItem,
+                };
+
+                return View(bookLoanData);
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CloseBookLoan(BookLoanData data)
+        {
+            // TODO: This needs to be completed. 
+            if (data != null)
+            {
+                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(b => b.ID == id);
+                bookLoan.ReturnedDate = DateTime.Now;
+
+                var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
+                var newBookItem = await _context.BookItems.SingleOrDefaultAsync(b => b.ID == bookLoan.BookItemID);
+
+                var bookLoanData = new BookLoanData
+                {
+                    loan = bookLoan,
+                    bookItem = newBookItem,
+                };
+
+                return View(bookLoanData);
+
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
