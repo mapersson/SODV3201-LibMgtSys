@@ -22,6 +22,49 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(viewData);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+
+            var accountInfo = new LibAccountData();
+            return View(accountInfo);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(LibAccountData data)
+        {
+            // TODO: Need to check that Owner information is unique. 
+            // TODO: Need view model for Owner information.
+            if (data != null)
+            {
+                var newOwner = new Person
+                {
+                    FirstName = data.Owner.FirstName,
+                    LastName = data.Owner.LastName
+                };
+
+                var newAccount = new LibAccount
+                {
+                    // TODO: Change the library account init to accept an owner and set the items checked out to 0
+                    Owner = newOwner,
+                    ItemsCheckedOut = 0
+                };
+
+                try
+                {
+                    _context.LibAccounts.Add(newAccount);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            // TODO: Make this redirect more informative. 
+            return RedirectToAction(nameof(Create));
+        }
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id != null)
@@ -64,6 +107,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBookLoan(BookLoanData data)
         {
             if (data != null)
@@ -112,27 +156,28 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CloseBookLoan(BookLoanData data)
         {
-            // TODO: This needs to be completed. 
+
             if (data != null)
             {
-                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(b => b.ID == id);
-                bookLoan.ReturnedDate = DateTime.Now;
+                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(l => l.ID == data.loan.ID);
+                bookLoan.ReturnedDate = data.loan.ReturnedDate;
+                var returnID = data.loan.LibAccountID;
 
-                var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
-                var newBookItem = await _context.BookItems.SingleOrDefaultAsync(b => b.ID == bookLoan.BookItemID);
-
-                var bookLoanData = new BookLoanData
+                try
                 {
-                    loan = bookLoan,
-                    bookItem = newBookItem,
-                };
-
-                return View(bookLoanData);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Details), new { id = returnID });
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
 
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(CloseBookLoan), data.loan.ID);
         }
     }
 }
