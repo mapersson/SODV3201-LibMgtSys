@@ -117,7 +117,7 @@ namespace SODV3201_LibMgtSys.Controllers
             // TODO: This needs to be completed. 
             if (data != null)
             {
-                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(b => b.ID == id);
+                var bookLoan = new BookLoan();
                 bookLoan.ReturnedDate = DateTime.Now;
 
                 var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();

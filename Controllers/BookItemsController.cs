@@ -27,6 +27,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookItem bookItem)
         {
             try
@@ -61,6 +62,7 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(Guid? id)
         {
             if (id == null)
