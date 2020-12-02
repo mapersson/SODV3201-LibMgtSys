@@ -18,12 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Author)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Borrowed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Due)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,12 +30,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Borrowed)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Due)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
