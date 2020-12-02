@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Message</h2>
 
-@using (Html.BeginForm("CreateBookLoan", "LibAccounts"))
+@using (Html.BeginForm("CloseBookLoan", "LibAccounts"))
 {
     @Html.ValidationSummary(false,"", new {@class = "text-danger"})
 
@@ -28,7 +28,8 @@
         @* @Html.ValidationMessageFor(m => m.loan.DueDate) *@
     </div>
 
-    @Html.HiddenFor(m => m.loan.BookItemID)
+    @Html.HiddenFor(m => m.loan.ID)
+    @Html.HiddenFor(m => m.loan.LibAccountID)
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Close</button>
