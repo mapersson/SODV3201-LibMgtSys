@@ -36,8 +36,6 @@ namespace SODV3201_LibMgtSys.Controllers
                 {
                     if (bookItem != null)
                     {
-                        bookItem.Borrowed = null;
-                        bookItem.Due = null;
                         _context.BookItems.Add(bookItem);
                         await _context.SaveChangesAsync();
                     }

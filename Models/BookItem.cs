@@ -13,7 +13,5 @@ namespace SODV3201_LibMgtSys.Models
         public string Author { get; set; }
         [Required(ErrorMessage = "Please enter Title of Book")]
         public string Title { get; set; }
-        public DateTime? Borrowed { get; set; }
-        public DateTime? Due { get; set; }
     }
 }
