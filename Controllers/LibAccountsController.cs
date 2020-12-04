@@ -36,8 +36,7 @@ namespace SODV3201_LibMgtSys.Controllers
         public async Task<IActionResult> Create(LibAccountData data)
         {
             // TODO: Need to check that Owner information is unique. 
-            // TODO: Need view model for Owner information.
-            if (data != null)
+            if (ModelState.IsValid)
             {
                 var newOwner = new Person
                 {
@@ -63,6 +62,7 @@ namespace SODV3201_LibMgtSys.Controllers
                     ModelState.AddModelError("", ex.Message);
                 }
             }
+
             // TODO: Make this redirect more informative. 
             return RedirectToAction(nameof(Create));
         }
@@ -81,9 +81,6 @@ namespace SODV3201_LibMgtSys.Controllers
                     Owner = owner,
                     BookLoans = bookLoans
                 };
-
-                // var libAccount = await _context.LibAccounts.Include(o => o.Owner).Include(b => b.BookLoans).ThenInclude(c => c.BookItem).SingleAsync(l => l.ID == id);
-
                 return View(libAccountData);
             }
             return RedirectToAction(nameof(Index));

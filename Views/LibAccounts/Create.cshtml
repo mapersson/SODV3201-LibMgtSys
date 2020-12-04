@@ -15,21 +15,17 @@
             <div class="form-group">
                 <label asp-for="Owner.FirstName" class="control-label"></label>
                 <input asp-for="Owner.FirstName" class="form-control" />
-                @* <span asp-validation-for="ISBN" class="text-danger"></span> *@
+                <span asp-validation-for="Owner.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Owner.LastName" class="control-label"></label>
                 <input asp-for="Owner.LastName" class="form-control" />
-                @* <span asp-validation-for="Title" class="text-danger"></span> *@
-                @* <div class="form-group">
-                    </div>
-                    <label asp-for="Author" class="control-label"></label>
-                    <input asp-for="Author" class="form-control" />
-                    <span asp-validation-for="Author" class="text-danger"></span>
-                    </div> *@
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
+                <span asp-validation-for="Owner.LastName" class="text-danger"></span>
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
         </form>
     </div>
 </div>
@@ -37,3 +33,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
