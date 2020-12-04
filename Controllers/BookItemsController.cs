@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,6 @@ namespace SODV3201_LibMgtSys.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
             return View(await _context.BookItems.ToListAsync());
         }
 
@@ -98,6 +98,36 @@ namespace SODV3201_LibMgtSys.Controllers
             var bookItem = await _context.BookItems.FirstOrDefaultAsync(m => m.ID == id);
 
             return View(bookItem);
+        }
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id.HasValue)
+            {
+                var bookLoansCount = _context.BookLoans.Where(l => l.BookItemID == id).Where(r => r.ReturnedDate == null).ToList().Count();
+                if (bookLoansCount == 0)
+                {
+                    var book = _context.BookItems.Single(b => b.ID == id);
+
+                    try
+                    {
+                        _context.BookItems.Remove(book);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        ModelState.AddModelError("", ex.Message);
+                    }
+                }
+                else
+                {
+                    // TODO: Create a view that informs the user that the book can't be deleted. 
+                    return RedirectToAction(nameof(Details), new { id = id });
+                }
+            }
+
+            return NotFound();
         }
     }
 

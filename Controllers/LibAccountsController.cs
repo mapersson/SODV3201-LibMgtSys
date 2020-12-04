@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SODV3201_LibMgtSys.Data;
@@ -67,11 +68,23 @@ namespace SODV3201_LibMgtSys.Controllers
         }
         public async Task<IActionResult> Details(Guid? id)
         {
+            // TODO: Determine if async is actually required here. 
             if (id != null)
             {
-                var libAccount = await _context.LibAccounts.Include(o => o.Owner).Include(b => b.BookLoans).ThenInclude(c => c.BookItem).SingleAsync(l => l.ID == id);
+                var libAccountID = id.GetValueOrDefault();
+                var account = await _context.LibAccounts.Include(o => o.Owner).SingleAsync(l => l.ID == libAccountID);
+                var owner = _context.People.Single(o => o.ID == account.Owner.ID);
+                var bookLoans = _context.BookLoans.Include(c => c.BookItem).Where(u => u.LibAccountID == libAccountID).Where(l => l.ReturnedDate == null).ToList();
 
-                return View(libAccount);
+                var libAccountData = new LibAccountData
+                {
+                    Owner = owner,
+                    BookLoans = bookLoans
+                };
+
+                // var libAccount = await _context.LibAccounts.Include(o => o.Owner).Include(b => b.BookLoans).ThenInclude(c => c.BookItem).SingleAsync(l => l.ID == id);
+
+                return View(libAccountData);
             }
             return RedirectToAction(nameof(Index));
         }
@@ -137,11 +150,11 @@ namespace SODV3201_LibMgtSys.Controllers
         {
             if (id != null)
             {
-                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(b => b.ID == id);
+                var bookLoan = await _context.BookLoans.SingleAsync(b => b.ID == id);
                 bookLoan.ReturnedDate = DateTime.Now;
 
                 var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
-                var newBookItem = await _context.BookItems.SingleOrDefaultAsync(b => b.ID == bookLoan.BookItemID);
+                var newBookItem = await _context.BookItems.SingleAsync(b => b.ID == bookLoan.BookItemID);
 
                 var bookLoanData = new BookLoanData
                 {
@@ -162,8 +175,11 @@ namespace SODV3201_LibMgtSys.Controllers
 
             if (data != null)
             {
-                var bookLoan = await _context.BookLoans.SingleOrDefaultAsync(l => l.ID == data.loan.ID);
+                var bookLoan = await _context.BookLoans.SingleAsync(l => l.ID == data.loan.ID);
+                var libAccount = await _context.LibAccounts.SingleAsync(l => l.ID == bookLoan.LibAccountID);
                 bookLoan.ReturnedDate = data.loan.ReturnedDate;
+                // TODO: Change this code to properly decrement the number of books checked out. 
+                libAccount.ItemsCheckedOut = libAccount.ItemsCheckedOut - 1;
                 var returnID = data.loan.LibAccountID;
 
                 try

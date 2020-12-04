@@ -1,4 +1,4 @@
-@model SODV3201_LibMgtSys.Models.LibAccount
+@model SODV3201_LibMgtSys.Models.ViewModels.LibAccountData
 
 @{
     ViewData["Title"] = "Details";
@@ -30,7 +30,6 @@
                 <tr>
                     <th>Book Title</th>
                     <th>Due Date</th>
-                    <th>Returned Date</th>
                 </tr>
                 @foreach (var item in Model.BookLoans)
                 {
@@ -42,10 +41,7 @@
                             @Html.DisplayFor(modelItem => item.DueDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ReturnedDate)
-                        </td>
-                        <td>
-                            <a asp-controller="BookItems" asp-action="Details" asp-route-id="@item.BookItem.ID">Details</a>
+                            <a asp-controller="BookItems" asp-action="Details" asp-route-id="@item.BookItemID">Details</a>
                             |
                             <a asp-controller="LibAccounts" asp-action="CloseBookLoan" asp-route-id="@item.ID">Close Book
                                 Loan</a>

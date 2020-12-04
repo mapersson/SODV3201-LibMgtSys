@@ -27,7 +27,76 @@ namespace SODV3201_LibMgtSys.Data
                 Author = "Chic Scott Jr",
                 Title = "Ski Trails in the Canadian Rockies"
 
-                }
+                },
+                new BookItem { ISBN = "978771601186",
+                Author = "Robert Greene",
+                Title = "48 Laws of Power"
+
+                },
+                new BookItem { ISBN = "978771601187",
+                Author = "Be Here Now",
+                Title = "Ram Dass"
+                },
+                new BookItem { ISBN = "978771601188",
+                Author = "Jocko Willink",
+                Title = "Extreme Ownership"
+                },
+                new BookItem { ISBN = "978771601189",
+                Author = "Thich Nhat Hanh",
+                Title = "How to Eat"
+                },
+                new BookItem { ISBN = "978771601190",
+                Author = "Dale Carnegie",
+                Title = "How to Win Friends & Influence People"
+                },
+                new BookItem { ISBN = "978771601191",
+                Author = "Christina Wodtke",
+                Title = "Radical Focus"
+                },
+                new BookItem { ISBN = "978771601192",
+                Author = "Jason Fried & David Hansson",
+                Title = "ReWork"
+                },
+                new BookItem { ISBN = "978771601193",
+                Author = "Yuval Noah Harari",
+                Title = "Sapiens"
+                },
+                new BookItem { ISBN = "978771601194",
+                Author = "Gregory David Roberts",
+                Title = "Shantaram"
+                },
+                new BookItem {
+                    ISBN = "978771601195",
+                    Author = "John Sonmez",
+                    Title = "Soft Skills"
+                },
+                new BookItem { ISBN = "978771601196",
+                    Title = "Soft Skills Again",
+                    Author = "John Sonmez"
+                },
+                new BookItem { ISBN = "978771601197",
+
+                Title = "Tao of Wu", Author = "RZA"},
+
+                new BookItem { ISBN ="978771601198",
+
+                Title = "The Alchemist",
+                Author = "Paulo Coelho"},
+
+                new BookItem { ISBN = "978771601199",
+                Title = "The Art of War",
+                Author = "Sun Tzu", },
+
+                new BookItem {ISBN = "978771601200",
+                Title = "The Book of Mistakes",
+                Author = "Skip Prichard"},
+                new BookItem { ISBN=  "978771601201",
+                Title = "The Culture Code",
+                Author = "Daniel Coyle"},
+                new BookItem { ISBN = "978771601202",
+                Title = "The Four Agreements",
+                Author = "Don Miguel Ruiz"}
+
             };
 
             foreach (BookItem item in bookItems)
@@ -44,6 +113,10 @@ namespace SODV3201_LibMgtSys.Data
                 new Person {
                     FirstName = "Heather",
                     LastName = "Chamberlain"
+                },
+                new Person {
+                    FirstName = "Elizabeth",
+                    LastName = "Seybold"
                 }
             };
 
@@ -56,11 +129,15 @@ namespace SODV3201_LibMgtSys.Data
             var libAcccounts = new LibAccount[] {
                 new LibAccount {
                     Owner = people.Single(p => p.LastName == "Persson"),
-                    ItemsCheckedOut = 0
+                    ItemsCheckedOut = 1
                 },
                 new LibAccount {
                     Owner = people.Single(p => p.LastName == "Chamberlain"),
-                    ItemsCheckedOut = 0
+                    ItemsCheckedOut = 1
+                },
+                new LibAccount {
+                    Owner = people.Single(p => p.LastName == "Seybold"),
+                    ItemsCheckedOut = 2
                 }
             };
 
@@ -84,7 +161,37 @@ namespace SODV3201_LibMgtSys.Data
                     BookItemID = bookItems.Single( b => b.ISBN == "978771601185").ID,
                     BorrowedDate = DateTime.Now,
                     DueDate = DateTime.Parse("2020-09-01")
-                }
+                },
+                new BookLoan
+                {
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Chamberlain").ID,
+                    BookItemID = bookItems.Single( b => b.ISBN == "978771601199").ID,
+                    BorrowedDate = DateTime.Now,
+                    DueDate = DateTime.Parse("2020-09-01"),
+                    ReturnedDate = DateTime.Parse("2020-12-4")
+                },
+                new BookLoan
+                {
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Seybold").ID,
+                    BookItemID = bookItems.Single( b => b.ISBN == "978771601201").ID,
+                    BorrowedDate = DateTime.Now,
+                    DueDate = DateTime.Parse("2020-09-01")
+                },
+                new BookLoan
+                {
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Seybold").ID,
+                    BookItemID = bookItems.Single( b => b.ISBN == "978771601202").ID,
+                    BorrowedDate = DateTime.Now,
+                    DueDate = DateTime.Parse("2020-09-01")
+                },
+                new BookLoan
+                {
+                    LibAccountID = libAcccounts.Single(l => l.Owner.LastName == "Seybold").ID,
+                    BookItemID = bookItems.Single( b => b.ISBN == "978771601198").ID,
+                    BorrowedDate = DateTime.Now,
+                    DueDate = DateTime.Parse("2020-09-01"),
+                    ReturnedDate = DateTime.Parse("2020-12-4")
+                },
             };
 
             foreach (BookLoan item in bookLoans)
