@@ -30,21 +30,22 @@ namespace SODV3201_LibMgtSys.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookItem bookItem)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                //    TODO: This check may not be required because bookItem is not nullable. 
+                if (bookItem != null)
                 {
-                    if (bookItem != null)
+                    try
                     {
                         _context.BookItems.Add(bookItem);
                         await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
                     }
-                    return RedirectToAction(nameof(Index));
+                    catch (DbUpdateException ex)
+                    {
+                        ModelState.AddModelError("", ex.Message);
+                    }
                 }
-            }
-            catch (DbUpdateException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
             }
             return View(bookItem);
         }
