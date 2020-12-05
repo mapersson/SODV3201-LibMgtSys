@@ -89,11 +89,6 @@ namespace SODV3201_LibMgtSys.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateBookLoan(Guid? id)
         {
-            // TODO: This action needs to be revised to support validation. 
-            var testBook = await _context.BookItems.SingleAsync(b => b.ISBN == "978771601184");
-            var testID = testBook.ID;
-            id = testID;
-
             if (id != null)
             {
                 var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
@@ -120,12 +115,14 @@ namespace SODV3201_LibMgtSys.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateBookLoan(BookLoanData data)
         {
-            if (data != null)
+
+            if (ModelState.IsValid)
             {
                 var bookLoan = data.loan;
                 var libAccount = await _context.LibAccounts.SingleAsync(l => l.ID == bookLoan.LibAccountID);
                 // TODO: Change this code to properly increment the number of books checked out. 
                 libAccount.ItemsCheckedOut = libAccount.ItemsCheckedOut + 1;
+
                 try
                 {
                     _context.BookLoans.Add(bookLoan);
@@ -137,9 +134,16 @@ namespace SODV3201_LibMgtSys.Controllers
                 {
                     ModelState.AddModelError("", ex.Message);
                 }
-
             }
-            return View(data);
+
+            var libAccounts = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
+            var returnModel = new BookLoanData
+            {
+                loan = data.loan,
+                libAccounts = libAccounts,
+                bookItem = data.bookItem
+            };
+            return View(returnModel);
         }
 
         [HttpGet]
