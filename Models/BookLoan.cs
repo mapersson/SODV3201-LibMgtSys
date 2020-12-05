@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SODV3201_LibMgtSys.Models
 {
@@ -7,8 +8,15 @@ namespace SODV3201_LibMgtSys.Models
         public Guid ID { get; set; }
         public Guid LibAccountID { get; set; }
         public Guid BookItemID { get; set; }
+
+        [Display(Name = "Borrowed Date")]
         public DateTime BorrowedDate { get; set; }
+
+        [Display(Name = "Due Date")]
+
         public DateTime DueDate { get; set; }
+
+        [Display(Name = "Returned Date")]
         public DateTime? ReturnedDate { get; set; }
 
         public BookItem BookItem { get; set; }

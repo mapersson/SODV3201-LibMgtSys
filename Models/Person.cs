@@ -9,10 +9,12 @@ namespace SODV3201_LibMgtSys.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid ID { get; set; }
 
+        [Display(Name = "Last Name")]
         [Required(ErrorMessage = "Please enter a last name")]
         [RegularExpression(@"^[a-zA-Z]+", ErrorMessage = "Name can only contain letters.")]
         public string LastName { get; set; }
 
+        [Display(Name = "First Name")]
         [Required(ErrorMessage = "Please enter a first name")]
         [RegularExpression(@"^[a-zA-Z]+", ErrorMessage = "Name can only contain letters.")]
         public string FirstName { get; set; }
