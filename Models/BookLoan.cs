@@ -11,17 +11,18 @@ namespace SODV3201_LibMgtSys.Models
 
         [Display(Name = "Borrowed Date")]
         [DataType(DataType.Date)]
-        [CurrentOrFutureDate]
+        [CurrentOrFutureDate(ErrorMessage = "Borrowed date must be after today's date")]
         public DateTime BorrowedDate { get; set; }
 
         [Display(Name = "Due Date")]
         [DataType(DataType.Date)]
-        [CurrentOrFutureDate]
+        [CurrentOrFutureDate(ErrorMessage = "Due date must be after today's date")]
         public DateTime DueDate { get; set; }
 
         [Display(Name = "Returned Date")]
         [DataType(DataType.Date)]
-        [CurrentOrFutureDate]
+        [CurrentOrFutureDate(ErrorMessage = "Returned date must be after today's date")]
+        [ReturnDateAgainstBorrowedDate]
         public DateTime? ReturnedDate { get; set; }
 
         public BookItem BookItem { get; set; }
@@ -39,15 +40,45 @@ namespace SODV3201_LibMgtSys.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var date = Convert.ToDateTime(value);
-            if (DateTime.Compare(date, DateTime.Today) >= 0)
+            if (value != null)
             {
-                return ValidationResult.Success;
+                var date = Convert.ToDateTime(value);
+                if (DateTime.Compare(date, DateTime.Today) >= 0)
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    return new ValidationResult("");
+                }
             }
-            else
+            return ValidationResult.Success;
+        }
+    }
+
+    public class ReturnDateAgainstBorrowedDate : ValidationAttribute
+    {
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+
+            if (value != null)
             {
-                return new ValidationResult("Borrowed date must be after todays date");
+
+                var returnDate = Convert.ToDateTime(value);
+                var context = (BookLoan)validationContext.ObjectInstance;
+                var borrowedDate = context.BorrowedDate;
+
+                if (DateTime.Compare(returnDate, borrowedDate) > 0)
+                {
+                    return ValidationResult.Success;
+                }
+                else
+                {
+                    return new ValidationResult("Return date must be after the borrowed date");
+                }
             }
+            return ValidationResult.Success;
         }
     }
 
