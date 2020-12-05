@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("CreateBookLoan","LibAccounts"))
 {
+@* TODO: This view needs to be revised to support validation *@
     @Html.ValidationSummary(false,"", new {@class = "text-danger"})
     
     <div class= "form-group"> 

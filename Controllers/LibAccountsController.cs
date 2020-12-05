@@ -89,7 +89,7 @@ namespace SODV3201_LibMgtSys.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateBookLoan(Guid? id)
         {
-
+            // TODO: This action needs to be revised to support validation. 
             var testBook = await _context.BookItems.SingleAsync(b => b.ISBN == "978771601184");
             var testID = testBook.ID;
             id = testID;

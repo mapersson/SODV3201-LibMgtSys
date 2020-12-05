@@ -10,13 +10,15 @@ namespace SODV3201_LibMgtSys.Models
         public Guid BookItemID { get; set; }
 
         [Display(Name = "Borrowed Date")]
+        [DataType(DataType.Date)]
         public DateTime BorrowedDate { get; set; }
 
         [Display(Name = "Due Date")]
-
+        [DataType(DataType.Date)]
         public DateTime DueDate { get; set; }
 
         [Display(Name = "Returned Date")]
+        [DataType(DataType.Date)]
         public DateTime? ReturnedDate { get; set; }
 
         public BookItem BookItem { get; set; }
