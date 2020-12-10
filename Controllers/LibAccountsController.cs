@@ -3,12 +3,14 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using SODV3201_LibMgtSys.Data;
 using SODV3201_LibMgtSys.Models;
 using SODV3201_LibMgtSys.Models.ViewModels;
 
 namespace SODV3201_LibMgtSys.Controllers
 {
+    [Authorize]
     public class LibAccountsController : Controller
     {
         private LibraryContext _context;

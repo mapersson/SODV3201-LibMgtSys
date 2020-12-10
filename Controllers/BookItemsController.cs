@@ -3,11 +3,12 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using SODV3201_LibMgtSys.Models;
 using SODV3201_LibMgtSys.Data;
 namespace SODV3201_LibMgtSys.Controllers
 {
-
+    [Authorize]
     public class BookItemsController : Controller
     {
         private LibraryContext _context;
