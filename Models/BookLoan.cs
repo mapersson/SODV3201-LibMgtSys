@@ -40,6 +40,7 @@ namespace SODV3201_LibMgtSys.Models
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            // Null values are captured by the model binding checks.  
             if (value != null)
             {
                 var date = Convert.ToDateTime(value);
@@ -64,7 +65,6 @@ namespace SODV3201_LibMgtSys.Models
 
             if (value != null)
             {
-
                 var returnDate = Convert.ToDateTime(value);
                 var context = (BookLoan)validationContext.ObjectInstance;
                 var borrowedDate = context.BorrowedDate;
