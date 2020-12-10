@@ -5,11 +5,11 @@ using SODV3201_LibMgtSys.Models;
 
 namespace SODV3201_LibMgtSys.Controllers
 {
-    public class AdminController : Controller
+    public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
 
-        public AdminController(UserManager<AppUser> usrMgr)
+        public AccountController(UserManager<AppUser> usrMgr)
         {
             userManager = usrMgr;
         }
