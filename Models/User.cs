@@ -5,7 +5,7 @@ namespace SODV3201_LibMgtSys.Models
 {
     public class User
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter a name")]
         public string Name { get; set; }
 
         [Required]
@@ -14,5 +14,9 @@ namespace SODV3201_LibMgtSys.Models
 
         [Required]
         public string Password { get; set; }
+
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 }

@@ -16,16 +16,16 @@ namespace SODV3201_LibMgtSys.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(userManager.Users);
         }
 
-        public ViewResult Create()
+        public ViewResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> Register(User user)
         {
             if (ModelState.IsValid)
             {
