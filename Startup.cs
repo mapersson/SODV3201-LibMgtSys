@@ -54,6 +54,7 @@ namespace SODV3201_LibMgtSys
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
