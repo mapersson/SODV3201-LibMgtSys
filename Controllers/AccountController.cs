@@ -1,17 +1,22 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using SODV3201_LibMgtSys.Models;
+using SODV3201_LibMgtSys.Models.ViewModels;
 
 namespace SODV3201_LibMgtSys.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
-
-        public AccountController(UserManager<AppUser> usrMgr)
+        private SignInManager<AppUser> signInManager;
+        public AccountController(UserManager<AppUser> usrMgr, SignInManager<AppUser> signInMgr)
         {
+
             userManager = usrMgr;
+            signInManager = signInMgr;
         }
 
         public IActionResult Index()
@@ -19,11 +24,54 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(userManager.Users);
         }
 
+        [AllowAnonymous]
+        public IActionResult Login(string returnUrl)
+        {
+            LoginData loginData = new LoginData();
+            loginData.ReturnUrl = returnUrl;
+            return View(loginData);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginData loginData)
+        {
+
+            if (ModelState.IsValid)
+            {
+                AppUser appUser = await userManager.FindByEmailAsync(loginData.Email);
+                if (appUser != null)
+                {
+                    await signInManager.SignOutAsync();
+                    var result = await signInManager.PasswordSignInAsync(appUser, loginData.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return Redirect(loginData.ReturnUrl ?? "/");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(nameof(loginData.Email), "Login Failed, Invalid Email or Password");
+                }
+
+            }
+            return View(loginData);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
         public ViewResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register(User user)
         {
