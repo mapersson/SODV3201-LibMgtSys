@@ -1,0 +1,56 @@
+@model SODV3201_LibMgtSys.Models.ViewModels.RoleEditData
+
+@{
+    ViewData["Title"] = "Update";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="Update" method="post">
+            <input type="hidden" name="roleName" value="@Model.Role.Name">
+            <input type="hidden" name="roleId" value="@Model.Role.Id">
+            <h2>Add to @Model.Role.Name</h2>
+            <table>
+                @if (@Model.NonMembers.Count() == 0)
+                {
+                    <tr>
+                        <td>All Users are Members</td>
+                    </tr>
+                } else
+                {
+                    @foreach (AppUser user in Model.NonMembers)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <input type="checkbox" name="AddIds" value="@user.Id">
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+             <h2>Remove from @Model.Role.Name</h2>
+                         <table>
+                @if (@Model.Members.Count() == 0)
+                {
+                    <tr>
+                        <td>No Users are Members</td>
+                    </tr>
+                } else
+                {
+                    @foreach (AppUser user in Model.Members)
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>
+                                <input type="checkbox" name="DeleteIds" value="@user.Id">
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+            <input type="submit" value="Update" class="btn btn-primary">
+        </form>
+    </div>
+</div>
