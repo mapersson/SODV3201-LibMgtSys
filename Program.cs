@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using SODV3201_LibMgtSys.Data;
+using SODV3201_LibMgtSys.Models;
 
 namespace SODV3201_LibMgtSys
 {
@@ -37,7 +39,9 @@ namespace SODV3201_LibMgtSys
                 try
                 {
                     var context = services.GetRequiredService<LibraryContext>();
-                    DbInitializer.Initialize(context);
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    DbInitializer.Initialize(context, userManager, roleManager);
                 }
                 catch (System.Exception ex)
                 {

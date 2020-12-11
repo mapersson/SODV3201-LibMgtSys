@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using SODV3201_LibMgtSys.Models;
 
 namespace SODV3201_LibMgtSys.Data
 {
     public static class DbInitializer
     {
-        public static void Initialize(LibraryContext context)
+        public static void Initialize(LibraryContext context, UserManager<AppUser> usrMgr, RoleManager<IdentityRole> roleMgr)
         {
             context.Database.EnsureCreated();
 
@@ -15,6 +16,9 @@ namespace SODV3201_LibMgtSys.Data
             {
                 return;
             }
+
+            InitializeRoles(roleMgr);
+            InitializeUsers(usrMgr);
 
             var bookItems = new BookItem[]
             {
@@ -199,6 +203,65 @@ namespace SODV3201_LibMgtSys.Data
                 context.BookLoans.Add(item);
             }
             context.SaveChanges();
+        }
+
+        private static void InitializeUsers(UserManager<AppUser> usrMgr)
+        {
+            if (usrMgr.Users.Count() != 0)
+            {
+                return;
+            }
+            else
+            {
+                AppUser genUser = new AppUser()
+                {
+                    UserName = "UserAccount",
+                    Email = "UserAccount@me.com",
+                };
+
+                IdentityResult result = usrMgr.CreateAsync(genUser, "FrostyCOVID2019!").Result;
+                if (result.Succeeded)
+                {
+                    usrMgr.AddToRoleAsync(genUser, "General").Wait();
+                }
+
+                AppUser adminUser = new AppUser()
+                {
+                    UserName = "AdminAccount",
+                    Email = "AdminAccount@me.com",
+                };
+
+                result = usrMgr.CreateAsync(adminUser, "FrostyCOVID2019!").Result;
+                if (result.Succeeded)
+                {
+                    usrMgr.AddToRoleAsync(adminUser, "Administrator").Wait();
+                }
+
+            }
+        }
+
+        private static void InitializeRoles(RoleManager<IdentityRole> roleMgr)
+        {
+            if (roleMgr.Roles.Count() != 0)
+            {
+                return;
+            }
+            else
+            {
+                IdentityRole genRole = new IdentityRole()
+                {
+                    Name = "General"
+                };
+
+                IdentityResult result = roleMgr.CreateAsync(genRole).Result;
+
+                IdentityRole adminRole = new IdentityRole()
+                {
+                    Name = "Administrator"
+                };
+
+                result = roleMgr.CreateAsync(adminRole).Result;
+            }
         }
     }
 }
