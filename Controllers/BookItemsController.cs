@@ -101,7 +101,7 @@ namespace SODV3201_LibMgtSys.Controllers
 
             return View(bookItem);
         }
-
+        [HttpPost]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id.HasValue)

@@ -34,7 +34,7 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a> |
+                    <button data-bookItem-ID = "@item.ID" class="btn-link js-delete">Delete</button> |
                     <a asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID">Check Out</a>
                 </td>
             </tr>
@@ -44,6 +44,22 @@
 
 @section Scripts {
     <script> 
+        $(document).ready ( function (){
+            var myDataTable = $('#bookItems').DataTable();
+            $('#bookItems .js-delete').on("click", function() {
+                var button = $(this);
+                var result = confirm("Are you sure you wish to delete this customer?");
+                if (result){
+                    $.ajax({
+                        url: "BookItems/Delete/" + button.attr("data-bookItem-ID"),
+                        method: "POST",
+                        success: function () {
+                            myDataTable.row(button.parents("tr")).remove().draw();
+                        }
+                    });
+                }
+            });
+        });
         $(document).ready( function () {
             $('#bookItems').DataTable();
         });
