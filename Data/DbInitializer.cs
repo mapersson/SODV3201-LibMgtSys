@@ -237,6 +237,18 @@ namespace SODV3201_LibMgtSys.Data
                     usrMgr.AddToRoleAsync(adminUser, "Administrator").Wait();
                 }
 
+                AppUser librarianUser = new AppUser()
+                {
+                    UserName = "LibrarianAccount",
+                    Email = "LibrarianAccount@me.com",
+                };
+
+                result = usrMgr.CreateAsync(librarianUser, "FrostyCOVID2019!").Result;
+                if (result.Succeeded)
+                {
+                    usrMgr.AddToRoleAsync(librarianUser, "Librarian").Wait();
+                }
+
             }
         }
 
@@ -261,6 +273,13 @@ namespace SODV3201_LibMgtSys.Data
                 };
 
                 result = roleMgr.CreateAsync(adminRole).Result;
+
+                IdentityRole librarianRole = new IdentityRole()
+                {
+                    Name = "Librarian"
+                };
+
+                result = roleMgr.CreateAsync(librarianRole).Result;
             }
         }
     }
