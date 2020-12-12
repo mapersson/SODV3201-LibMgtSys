@@ -32,10 +32,10 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <button data-bookItem-ID = "@item.ID" class="btn-link js-delete">Delete</button> |
-                    <a asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID">Check Out</a>
+                    <button class="btn-link" asp-action="Edit" asp-route-id="@item.ID">Edit</button>
+                    <button class="btn-link" asp-action="Details" asp-route-id="@item.ID">Details</button>
+                    <button data-bookItem-ID = "@item.ID" class="btn-link js-delete">Delete</button>
+                    <button class = "btn-link" asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID">Check Out</button>
                 </td>
             </tr>
         }
