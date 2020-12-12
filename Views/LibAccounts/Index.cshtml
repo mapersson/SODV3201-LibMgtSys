@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New Account</a>
 </p>
-<table class="table">
+<table class="table table-bordered table-hover" id="libAccounts">
     <thead>
         <tr>
             <th>
@@ -21,6 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ItemsCheckedOut)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -43,3 +44,11 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script> 
+        $(document).ready( function () {
+            $('#libAccounts').DataTable();
+        });
+    </script>
+}
