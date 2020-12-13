@@ -98,5 +98,11 @@ namespace SODV3201_LibMgtSys.Controllers
             }
             return View(user);
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
