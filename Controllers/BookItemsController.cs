@@ -22,6 +22,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(await _context.BookItems.ToListAsync());
         }
 
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -51,6 +52,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(bookItem);
         }
 
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -61,6 +63,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(await _context.BookItems.FirstOrDefaultAsync(m => m.ID == id));
         }
 
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(Guid? id)
@@ -88,7 +91,7 @@ namespace SODV3201_LibMgtSys.Controllers
             }
             return View(bookItemToUpdate);
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -101,6 +104,7 @@ namespace SODV3201_LibMgtSys.Controllers
 
             return View(bookItem);
         }
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpPost]
         public async Task<IActionResult> Delete(Guid? id)
         {

@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using SODV3201_LibMgtSys.Models;
 using SODV3201_LibMgtSys.Models.ViewModels;
 namespace SODV3201_LibMgtSys.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class RoleController : Controller
     {
         private RoleManager<IdentityRole> roleManager;

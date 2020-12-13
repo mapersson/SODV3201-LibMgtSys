@@ -24,7 +24,7 @@ namespace SODV3201_LibMgtSys.Controllers
             var viewData = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
             return View(viewData);
         }
-
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -33,6 +33,7 @@ namespace SODV3201_LibMgtSys.Controllers
             return View(accountInfo);
 
         }
+        [Authorize(Roles = "Librarian, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LibAccountData data)

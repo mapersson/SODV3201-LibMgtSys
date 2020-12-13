@@ -7,7 +7,7 @@ using SODV3201_LibMgtSys.Models.ViewModels;
 
 namespace SODV3201_LibMgtSys.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class AccountController : Controller
     {
         private UserManager<AppUser> userManager;
