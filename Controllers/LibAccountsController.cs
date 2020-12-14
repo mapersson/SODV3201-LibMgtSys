@@ -22,7 +22,16 @@ namespace SODV3201_LibMgtSys.Controllers
         public async Task<IActionResult> Index()
         {
             var viewData = await _context.LibAccounts.Include(l => l.Owner).ToListAsync();
-            return View(viewData);
+
+            if (User.IsInRole("Librarian") || User.IsInRole("Administrator"))
+            {
+                return View("LibIndex", viewData);
+            }
+            else
+            {
+                return View("UserIndex", viewData);
+            }
+
         }
         [Authorize(Roles = "Librarian, Administrator")]
         [HttpGet]
@@ -199,6 +208,8 @@ namespace SODV3201_LibMgtSys.Controllers
             }
             return RedirectToAction(nameof(CloseBookLoan), data.loan.ID);
         }
+
+        [Authorize(Roles = "Librarian, Administrator")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id != null)

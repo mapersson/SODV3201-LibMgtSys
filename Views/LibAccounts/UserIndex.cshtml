@@ -1,0 +1,52 @@
+@model IEnumerable<SODV3201_LibMgtSys.Models.LibAccount>
+@{
+    ViewData["Title"] = "LibAccountsIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<table class="table table-bordered table-hover" id="libAccounts">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemsCheckedOut)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemsCheckedOut)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section Scripts {
+    <script> 
+        $(document).ready( function () {
+            $('#libAccounts').DataTable();
+        });
+    </script>
+}
