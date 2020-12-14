@@ -83,14 +83,19 @@ namespace SODV3201_LibMgtSys.Controllers
                     Email = user.Email,
                 };
 
-                IdentityResult result = await userManager.CreateAsync(newUser, user.Password);
-                if (result.Succeeded)
+                IdentityResult resultUser = await userManager.CreateAsync(newUser, user.Password);
+                IdentityResult resultRole = await userManager.AddToRoleAsync(newUser, "General");
+                if (resultUser.Succeeded && resultRole.Succeeded)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Home", "Index");
                 }
                 else
                 {
-                    foreach (IdentityError error in result.Errors)
+                    foreach (IdentityError error in resultUser.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    foreach (IdentityError error in resultRole.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
                     }
