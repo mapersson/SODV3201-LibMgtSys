@@ -9,6 +9,7 @@
 
 @using (Html.BeginForm("CloseBookLoan", "LibAccounts"))
 {
+    @Html.AntiForgeryToken();
     @Html.ValidationSummary(false,"", new {@class = "text-danger"})
 
     <div class="form-group">

@@ -199,5 +199,24 @@ namespace SODV3201_LibMgtSys.Controllers
             }
             return RedirectToAction(nameof(CloseBookLoan), data.loan.ID);
         }
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id != null)
+            {
+                var account = _context.LibAccounts.Single(m => m.ID == id);
+                try
+                {
+                    _context.LibAccounts.Remove(account);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                }
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
