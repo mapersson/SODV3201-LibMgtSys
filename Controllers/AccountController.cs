@@ -87,7 +87,7 @@ namespace SODV3201_LibMgtSys.Controllers
                 IdentityResult resultRole = await userManager.AddToRoleAsync(newUser, "General");
                 if (resultUser.Succeeded && resultRole.Succeeded)
                 {
-                    return RedirectToAction("Home", "Index");
+                    return RedirectToAction(nameof(Login));
                 }
                 else
                 {
