@@ -28,14 +28,7 @@
         @Html.TextBoxFor(m => m.loan.DueDate,"{0:d MMM yyyy}", new {@class = "form-control"})
         @Html.ValidationMessageFor(m => m.loan.DueDate)
     </div>
-@*
-    <div class="checkbox">
-        <label for="">
-            @Html.CheckBoxFor(m=>m.Customer.IsSubscribed) Subscribe for News and Updates
-        </label>
 
-    </div>
-*@
     <div class = "form-group">
         @Html.LabelFor(m => m.loan.LibAccount)
         @Html.DropDownListFor( m => m.loan.LibAccountID, new SelectList(Model.libAccounts,"ID","Owner.FirstName"),"Select a Library Account: ", new { @class = "form-control"})

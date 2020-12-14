@@ -15,18 +15,17 @@
     <div class="form-group">
         @Html.LabelFor(m=>m.bookItem.Title)
         @Html.TextBoxFor(m=>m.bookItem.Title, new {@class = "form-control"})
-        @* @Html.ValidationMessageFor(m => m.loan.BookItem.Title) *@
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.loan.BorrowedDate)
         @Html.TextBoxFor(m => m.loan.BorrowedDate,"{0:d MMM yyyy}", new {@class = "form-control"})
-        @* @Html.ValidationMessageFor(m => m.loan.BorrowedDate) *@
+
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.loan.ReturnedDate)
         @Html.TextBoxFor(m => m.loan.ReturnedDate,"{0:d MMM yyyy}", new {@class = "form-control"})
-        @* @Html.ValidationMessageFor(m => m.loan.DueDate) *@
+
     </div>
 
     @Html.HiddenFor(m => m.loan.ID)
