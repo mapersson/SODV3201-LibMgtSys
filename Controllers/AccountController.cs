@@ -58,7 +58,7 @@ namespace SODV3201_LibMgtSys.Controllers
             }
             return View(loginData);
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

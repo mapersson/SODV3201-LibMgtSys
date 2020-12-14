@@ -19,7 +19,14 @@ namespace SODV3201_LibMgtSys.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.BookItems.ToListAsync());
+            if (User.IsInRole("Librarian") || User.IsInRole("Administrator"))
+            {
+                return View("LibIndex", await _context.BookItems.ToListAsync());
+            }
+            else
+            {
+                return View("UserIndex", await _context.BookItems.ToListAsync());
+            }
         }
 
         [Authorize(Roles = "Librarian, Administrator")]
