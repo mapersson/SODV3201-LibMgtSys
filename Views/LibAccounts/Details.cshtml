@@ -41,9 +41,11 @@
                             @Html.DisplayFor(modelItem => item.DueDate)
                         </td>
                         <td>
-                            <a asp-controller="BookItems" asp-action="Details" asp-route-id="@item.BookItemID">Details</a>
-                            |
-                            <a asp-controller="LibAccounts" asp-action="CloseBookLoan" asp-route-id="@item.ID">Close Book
+                            <a asp-controller="BookItems" asp-action="Details" asp-route-id="@item.BookItemID"
+                                class="btn btn-primary">Details</a>
+
+                            <a asp-controller="LibAccounts" asp-action="CloseBookLoan" asp-route-id="@item.ID"
+                                class="btn btn-primary">Close Book
                                 Loan</a>
                         </td>
                     </tr>
@@ -53,5 +55,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>

@@ -1,10 +1,10 @@
 @model IEnumerable<SODV3201_LibMgtSys.Models.BookItem>
 @{
-    ViewData["Title"] = "BookItemsIndex";
+    ViewData["Title"] = "Book Catalogue";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Book Catalogue</h2>
 
 <table class="table  table-bordered table-hover" id="bookItems">
     <thead>
@@ -29,11 +29,19 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.ID"><button class="btn-link">Details</button></a>
+                    <a asp-action="Details" asp-route-id="@item.ID"><button class="btn btn-primary">Details</button></a>
                     <a asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID"><button
-                            class="btn-link">Check Out</button></a>
+                            class="btn btn-primary">Check Out</button></a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#bookItems').DataTable();
+        });
+    </script>
+}

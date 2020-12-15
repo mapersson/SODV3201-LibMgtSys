@@ -1,6 +1,6 @@
 @model IEnumerable<SODV3201_LibMgtSys.Models.LibAccount>
 @{
-    ViewData["Title"] = "LibAccountsIndex";
+    ViewData["Title"] = "Library Accounts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -35,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.ItemsCheckedOut)
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary">Details</a>
                 </td>
             </tr>
         }

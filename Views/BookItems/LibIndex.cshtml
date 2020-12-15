@@ -1,6 +1,6 @@
 @model IEnumerable<SODV3201_LibMgtSys.Models.BookItem>
 @{
-    ViewData["Title"] = "BookItemsIndex";
+    ViewData["Title"] = "Book Catalogue";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -32,10 +32,10 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID"><button class="btn-link">Edit</button></a>
-                    <a asp-action="Details" asp-route-id="@item.ID"><button class="btn-link">Details</button></a>
-                    <button data-bookItem-ID = "@item.ID" class="btn-link js-delete">Delete</button>
-                    <a asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID"><button class = "btn-link" >Check Out</button></a>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><button class="btn btn-primary">Edit</button></a>
+                    <a asp-action="Details" asp-route-id="@item.ID"><button class="btn btn-primary">Details</button></a>
+                    <button data-bookItem-ID = "@item.ID" class="btn btn-primary js-delete">Delete</button>
+                    <a asp-action="CreateBookLoan" asp-controller="LibAccounts" asp-route-id="@item.ID"><button class = "btn btn-primary" >Check Out</button></a>
                 </td>
             </tr>
         }
