@@ -210,6 +210,8 @@ namespace SODV3201_LibMgtSys.Controllers
         }
 
         [Authorize(Roles = "Librarian, Administrator")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id != null)
